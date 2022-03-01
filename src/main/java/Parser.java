@@ -1,8 +1,13 @@
+/**
+ * Parses user commands
+ * Calls the relevant function to execute the command
+ */
 public class Parser {
-    private UI ui;
-    private TaskList taskList;
-    private Storage storage;
+    private final UI ui;
+    private final TaskList taskList;
+    private final Storage storage;
 
+    /** Command strings */
     private static final String TODO = "todo";
     private static final String DEADLINE = "deadline";
     private static final String EVENT = "event";
@@ -13,13 +18,25 @@ public class Parser {
     private static final String SAVE = "save";
     private static final String BYE = "bye";
 
-
+    /**
+     * Initialises Parser class
+     *
+     * @param ui        UI declared in Main
+     * @param taskList  TaskList declared in Main
+     * @param storage   Storage declared in Main
+     */
     public Parser(UI ui, TaskList taskList, Storage storage){
         this.ui = ui;
         this.taskList = taskList;
         this.storage = storage;
-    };
+    }
 
+    /**
+     * Directs user commands to relevant function to execute
+     *
+     * @param rawInput  user command
+     * @return          True if user wishes to exit, False otherwise
+     */
     public boolean executeCommand(String rawInput) {
         String commandWord = parseCommand(rawInput);
         String info = parseInfo(rawInput);

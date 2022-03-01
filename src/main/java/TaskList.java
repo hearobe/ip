@@ -3,6 +3,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Stores all tasks
+ * Handles functions to add, delete and edit tasks
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
     private final UI ui;
@@ -16,15 +20,23 @@ public class TaskList {
     /** format for printing datetime to string and reading from text file */
     private static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("LLL dd uuuu, hh:mm a");
 
+    /**
+     * Initialises TaskList
+     * @param ui    UI declared in main
+     */
     public TaskList(UI ui){
         tasks = new ArrayList<>();
         this.ui = ui;
     }
 
-    public void mark(String info){
+    /**
+     * Marks a task as completed
+     * @param i  index of task
+     */
+    public void mark(String i){
         int index;
         try{
-            index = Integer.parseInt(info);
+            index = Integer.parseInt(i);
             tasks.get(index-DISPLAYED_INDEX_OFFSET).setDone(true);
         } catch (NumberFormatException e){
             ui.showIncorrectFormatMsg();
@@ -36,10 +48,14 @@ public class TaskList {
         ui.showSuccessfulMark(tasks.get(index-DISPLAYED_INDEX_OFFSET));
     }
 
-    public void unmark(String info){
+    /**
+     * Marks a task as incomplete
+     * @param i  index of task
+     */
+    public void unmark(String i){
         int index;
         try{
-            index = Integer.parseInt(info);
+            index = Integer.parseInt(i);
             tasks.get(index-DISPLAYED_INDEX_OFFSET).setDone(false);
         } catch (NumberFormatException e){
             ui.showIncorrectFormatMsg();
@@ -51,6 +67,11 @@ public class TaskList {
         ui.showSuccessfulUnmark(tasks.get(index-DISPLAYED_INDEX_OFFSET));
     }
 
+    /**
+     * Changes date from command line to DateTime
+     * @param rawDate   user input of date
+     * @return  date in LocalDateTime
+     */
     public LocalDateTime parseDateTime(String rawDate){
         try{
             return LocalDateTime.parse(rawDate, DATE_TIME_INPUT_FORMATTER);
@@ -59,6 +80,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Changes date in text file to DateTime
+     * @param rawDate   date in text string
+     * @return  date in LocalDateTime
+     */
     public LocalDateTime parseDateTimeFromText(String rawDate){
         try{
             return LocalDateTime.parse(rawDate, DATE_TIME_OUTPUT_FORMATTER);
@@ -67,6 +93,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * adds a new task
+     * @param info  task description
+     */
     public void addTodo(String info){
         if(info == null){
             ui.showIncorrectFormatMsg();
@@ -77,6 +107,10 @@ public class TaskList {
         ui.showSuccessfulTaskAdded(newTask);
     }
 
+    /**
+     * adds a new deadline to tasks
+     * @param info  task description
+     */
     public void addDeadline(String info){
         if(info == null || !info.contains("/by")){
             ui.showIncorrectFormatMsg();
@@ -99,6 +133,10 @@ public class TaskList {
         ui.showSuccessfulTaskAdded(newDeadline);
     }
 
+    /**
+     * adds a new event to tasks
+     * @param info  event description
+     */
     public void addEvent(String info){
         if(info == null || !info.contains("/at")){
             ui.showIncorrectFormatMsg();
@@ -120,6 +158,10 @@ public class TaskList {
         ui.showSuccessfulTaskAdded(newEvent);
     }
 
+    /**
+     * deletes a task
+     * @param info  index of task to delete
+     */
     public void delete(String info){
         int index;
         Task removedTask;
@@ -136,6 +178,10 @@ public class TaskList {
         ui.showSuccessfulDelete(removedTask, tasks.size());
     }
 
+    /**
+     * reads from text file and adds a new event to tasks
+     * @param info  event description
+     */
     public void addEventFromText(String info){
         String description, at;
         LocalDateTime atDate;
@@ -156,6 +202,10 @@ public class TaskList {
         tasks.add(newEvent);
     }
 
+    /**
+     * reads from text file and adds a new deadline to tasks
+     * @param info  deadline description
+     */
     public void addDeadlineFromText(String info){
         String description, by;
         LocalDateTime byDate;
@@ -175,11 +225,19 @@ public class TaskList {
         tasks.add(newDeadline);
     }
 
+    /**
+     * reads from text file and adds a new task
+     * @param info  task description
+     */
     public void addTodofromText(String info){
         Task newTodo = new Task(info);
         tasks.add(newTodo);
     }
 
+    /**
+     * returns all tasks
+     * @return  ArrayList of tasks
+     */
     public ArrayList<Task> getTasks(){
         return tasks;
     }

@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Handles saving and loading tasks to and from a text file
+ */
 public class Storage {
     private final Scanner fileIn;
     private final UI ui;
@@ -17,11 +20,20 @@ public class Storage {
     /** Default file path */
     public static final String DEFAULT_STORAGE_FILEPATH = "duke.txt";
 
+    /**
+     * Initialises Storage
+     * @param ui                        UI declared in main
+     * @throws FileNotFoundException    Thrown if storage text file does not exist
+     */
     public Storage(UI ui) throws FileNotFoundException{
         this.ui = ui;
         fileIn = new Scanner(new InputStreamReader(new FileInputStream(DEFAULT_STORAGE_FILEPATH), StandardCharsets.UTF_8));
     }
 
+    /**
+     * Reads tasks from text file and saves them in TaskList
+     * @param taskList  List of tasks
+     */
     public void load(TaskList taskList){
         String info, curLine;
         try{
@@ -55,6 +67,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks in TaskList to a text file
+     * @param taskList  List of tasks
+     */
     public void save(TaskList taskList){
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(DEFAULT_STORAGE_FILEPATH), StandardCharsets.UTF_8))) {

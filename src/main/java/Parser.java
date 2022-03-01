@@ -15,6 +15,7 @@ public class Parser {
     private static final String UNMARK = "unmark";
     private static final String LIST = "list";
     private static final String DELETE = "delete";
+    private static final String FIND = "find";
     private static final String SAVE = "save";
     private static final String BYE = "bye";
 
@@ -59,6 +60,9 @@ public class Parser {
                 break;
             case LIST:
                 ui.showAllTasks(taskList);
+                break;
+            case FIND:
+                taskList.find(info);
                 break;
             case DELETE:
                 taskList.delete(info);

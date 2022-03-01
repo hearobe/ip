@@ -30,6 +30,20 @@ public class TaskList {
     }
 
     /**
+     * search for all tasks with the search term in its description
+     * @param searchterm    user inputted search term
+     */
+    public void find(String searchterm){
+        ArrayList<Task> filteredTasks = new ArrayList<>();
+        for(Task t: tasks){
+            if(t.getDescription().contains(searchterm)){
+                filteredTasks.add(t);
+            }
+        }
+        ui.showFilteredTasks(filteredTasks);
+    }
+
+    /**
      * Marks a task as completed
      * @param i  index of task
      */

@@ -145,4 +145,14 @@ public class UI {
             out.printf("%d. %s" + LS, i + DISPLAYED_INDEX_OFFSET, list.get(i));
         }
     }
+
+    /**
+     * Display filtered tasks after search
+     */
+    public void showFilteredTasks(ArrayList<Task> tasks){
+        out.print("Here are the tasks that match your search:" + LS);
+        for(int i = 0; i< tasks.size(); i++){
+            out.printf("%d. %s" + LS, i + DISPLAYED_INDEX_OFFSET, tasks.get(i));
+        }
+    }
 }
